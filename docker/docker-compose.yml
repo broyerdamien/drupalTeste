@@ -1,0 +1,141 @@
+version: '2.1'
+
+services:
+  ######### SERVICE WEB 
+  apache:
+    container_name: ${BASE_URL}${WEBSITE}_apache
+    build: ./container/httpd/apache
+    volumes:
+      - ../sources:/var/www/drupal
+      - ..:/var/www/projet
+    networks:
+       - frontend
+       - backend
+    depends_on:
+      - mysql
+    links:
+      - redis
+      - elasticsearch
+    labels:
+       - traefik.docker.network=frontend
+       - traefil.enable=true
+       - traefik.frontend.rule=Host:${URL_PROJECT}
+       - traefik.frontend.protocol=http,https
+       - traefik.port=80
+  
+  ######### SERVICE DATABASE
+  mysql:
+    container_name: ${BASE_URL}${WEBSITE}_mysql
+    build: ./container/database/mysql
+    environment:
+      MYSQL_DATABASE: "drupal"
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+    labels:
+      - traefik.enable=false
+    volumes:
+      - db-mysql:/var/lib/mysql
+    networks:
+       - backend
+
+  phpmyadmin:
+    container_name: ${BASE_URL}${WEBSITE}_my
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mysql
+    links:
+      - mysql:db
+
+    #environment:
+      #- PMA_USER=root
+      # - PMA_PASSWORD=root
+      #- MYSQL_ROOT_PASSWORD=root
+
+    labels:
+      - traefik.docker.network=frontend
+      - traefik.enable=true
+      - traefik.frontend.rule=Host:phpmyadmin-${URL_PROJECT}
+      - traefik.frontend.protocol=http,https
+      - traefik.port=80
+
+    networks:
+      - frontend
+      - backend
+
+  redis:
+    image: "redis:alpine"
+    container_name: ${BASE_URL}${WEBSITE}_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ../redis-data:/var/lib/redis
+      - ./container/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_APPLICATION_MODE=master
+    networks:
+      - backend
+    expose:
+      - "6379"
+
+  elasticsearch:
+    container_name: ${BASE_URL}${WEBSITE}_elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.7
+    environment:
+      - cluster.name=drupal-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1G -Xmx1G"
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - http.cors.enabled=true
+      - http.cors.allow-origin=*
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - db-elastic:/var/lib/elasticsearch/data
+    labels:
+      - traefik.enable=false
+    networks:
+      - backend
+
+  kibana:
+    container_name: ${BASE_URL}${WEBSITE}_kibana
+    image: docker.elastic.co/kibana/kibana:7.10.2
+    environment:
+      ELASTICSEARCH_REQUESTTIMEOUT: 60000
+    labels:
+      - traefik.docker.network=frontend
+      - traefik.enable=true
+      - traefik.frontend.rule=Host:kibana-${URL_PROJECT}
+      - traefik.frontend.protocol=http,https
+      - traefik.port=5601
+    networks:
+      - frontend
+      - backend
+
+  maildev:
+    image: djfarrelly/maildev
+    labels:
+      - traefik.docker.network=frontend
+      - traefik.enable=true
+      - traefik.frontend.rule=Host:maildev-${URL_PROJECT}
+      - traefik.frontend.protocol=http,https
+      - traefik.port=80
+    networks:
+      - frontend
+      - backend
+
+volumes:
+  db-mysql:
+  db-elastic:
+
+networks:
+  frontend:
+    external:
+      name: frontend
+  backend:
+    external: false
+    name: ${BASE_URL}backend

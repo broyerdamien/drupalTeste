@@ -1,0 +1,22 @@
+uuid: 7d6a1a52-2017-44d2-b920-0be0458d5517
+langcode: en
+status: true
+dependencies:
+  theme:
+    - theme_damien
+_core:
+  default_config_hash: nGE3EoPQQaQCuqTUtZgw0-KIzmrqdKDzdNQf2JyPUt4
+id: theme_damien_primary_local_tasks
+theme: theme_damien
+region: header
+weight: -4
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Primary tabs'
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: false
+visibility: {  }

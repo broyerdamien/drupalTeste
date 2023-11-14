@@ -1,0 +1,4 @@
+global:
+  css:
+    base:
+      dist/css/new.css: { minified: true }

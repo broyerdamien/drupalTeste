@@ -1,0 +1,23 @@
+uuid: 41e5b837-ee5c-445b-b7d7-6a3c3f9995fd
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - theme_damien
+_core:
+  default_config_hash: yEBET0cqDbk8dkWzaJw-8CKft0961VBflsISoSR6Lj8
+id: theme_damien_search_form_narrow
+theme: theme_damien
+region: header
+weight: -4
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Search form (narrow)'
+  label_display: '0'
+  provider: search
+  page_id: ''
+visibility: {  }

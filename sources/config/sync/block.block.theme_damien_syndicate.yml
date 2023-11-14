@@ -1,0 +1,23 @@
+uuid: b891453d-e8d9-4593-9c57-2d7790a707a7
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+  theme:
+    - theme_damien
+_core:
+  default_config_hash: 0gq3VPg-_UM69FCCWurLFIrrnIjC2HLKhwo9iQNtcUo
+id: theme_damien_syndicate
+theme: theme_damien
+region: header
+weight: 0
+provider: null
+plugin: node_syndicate_block
+settings:
+  id: node_syndicate_block
+  label: 'RSS feed'
+  label_display: '0'
+  provider: node
+  block_count: 10
+visibility: {  }

@@ -1,0 +1,22 @@
+uuid: 7518fe54-5a92-4acf-a8fa-1ba1b83402c2
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - theme_damien
+_core:
+  default_config_hash: VhBzWb7lMRtIOg9G7VSw_0uopi-7zXeHq4vXqqV1HFE
+id: theme_damien_breadcrumbs
+theme: theme_damien
+region: header
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  label_display: '0'
+  provider: system
+visibility: {  }

@@ -1,0 +1,18 @@
+core_version_requirement: ^9 || ^10
+type: theme
+
+name: 'theme damien'
+description: 'theme damien'
+package: 'theme_damien'
+
+base theme: olivero
+
+regions:
+  header: 'Header'
+  banner: 'Banner'
+  content: 'Content'
+  footer: 'Footer'
+  popin: 'Pop-In'
+
+libraries:
+  - theme_damien/global
