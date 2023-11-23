@@ -1,0 +1,25 @@
+<h2>Liste des Magasins</h2>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Nom</th>
+    <th>Adresse</th>
+    <th>E-mail</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% if content %}
+    {% for item in content %}
+      <tr>
+        <td>{{ item.ID }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.adresse }}</td>
+        <td>{{ item.mail }}</td>
+      </tr>
+    {% endfor %}
+  {% else %}
+    <tr><td colspan="4">Aucune donnée disponible.</td></tr>
+  {% endif %}
+  </tbody>
+</table>

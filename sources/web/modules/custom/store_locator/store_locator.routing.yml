@@ -1,0 +1,7 @@
+store_locator.display_content:
+  path: '/store-locator/content'
+  defaults:
+    _controller: '\Drupal\store_locator\Controller\StoreLocatorController::displayContent'
+    _title: 'Store Locator Content'
+  requirements:
+    _permission: 'access content'
