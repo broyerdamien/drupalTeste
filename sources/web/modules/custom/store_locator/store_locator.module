@@ -1,0 +1,10 @@
+<?php
+
+function store_locator_theme($existing, $type, $theme, $path){
+  return [
+    'store_locator_content' => [
+      'variables' => ['content' => null],
+      'template' => 'store-locator-content',
+    ],
+  ];
+}

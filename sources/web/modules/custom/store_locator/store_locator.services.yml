@@ -1,0 +1,4 @@
+services:
+  store_locator.service:
+    class: Drupal\store_locator\StoreLocatorService
+    arguments: ['@entity_type.manager',]

@@ -1,0 +1,5 @@
+name: Store locator
+type: module
+description: Store locator module
+core_version_requirement: ^9 || ^10
+package: Custom
